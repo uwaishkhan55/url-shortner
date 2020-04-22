@@ -3,6 +3,8 @@ const router = express.Router();
 const {ShortUrls} = require("../models/shortUrl");
 // get base URL
 
+
+//user can pass 2 things in body 1. longUrl 2. custom shortUrlCode 
 router.post("/short", (req, res) => {
   let shortUrl;
   if (!(req.body)) {
@@ -17,6 +19,8 @@ router.post("/short", (req, res) => {
 });
 
 
+
+//user request with shortUrl which is id here.
 router.get("/:id", (req, res) => {
   const _id = req.params.id;
   console.log('url id', _id);
@@ -43,12 +47,13 @@ router.get("/:id", (req, res) => {
         }
         console.log(redirectTo);
         // Redirect to actual URL
-        res.sendStatus(200)
-        // res.redirect(redirectTo);
+        res.redirect(redirectTo);
       }
     );
   });
 });
+
+
 
 
 
@@ -83,6 +88,8 @@ function createAndSaveShortUrl(shortUlrObj, res,givenUrl) {
 }
 
 
+
+//function to generate random string of length 6
 function generateRandomString() {
   var length = 6,
     charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
