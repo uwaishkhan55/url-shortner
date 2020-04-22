@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const ShortUrls = require("../models/shortUrl");
+const {ShortUrls} = require("../models/shortUrl");
 // get base URL
 
 router.post("/short", (req, res) => {
@@ -13,13 +13,10 @@ router.post("/short", (req, res) => {
   shortUrl = new ShortUrls({
     url: req.body.url,
   });
-  createAndSaveShortUrl(shortUrl, res,req.body.ownId);
+  createAndSaveShortUrl(shortUrl, res,req.body.givenUrl);
 });
-/**
- * @route GET api/urlID
- * @desc Redirect to actual url based on URL ID
- * @access public
- */
+
+
 router.get("/:id", (req, res) => {
   const _id = req.params.id;
   console.log('url id', _id);
@@ -46,7 +43,8 @@ router.get("/:id", (req, res) => {
         }
         console.log(redirectTo);
         // Redirect to actual URL
-        res.redirect(redirectTo);
+        res.sendStatus(200)
+        // res.redirect(redirectTo);
       }
     );
   });
@@ -54,13 +52,12 @@ router.get("/:id", (req, res) => {
 
 
 
-function createAndSaveShortUrl(shortUlrObj, res,ownId) {
+function createAndSaveShortUrl(shortUlrObj, res,givenUrl) {
   // Generate a random string to replace the url
   
   var randomStr;
-  if(ownId===undefined) randomStr=generateRandomString();
-  else randomStr=ownId;
-  console.log(randomStr+"-------------------->>>>>>>>>>>>>>>>>>>")
+  if(givenUrl==undefined) randomStr=generateRandomString();
+  else randomStr=givenUrl;
   // Check if the random string already exist in DB
   ShortUrls.findOne({ _id: randomStr }, (err, url) => {
     if (err) {
@@ -73,9 +70,9 @@ function createAndSaveShortUrl(shortUlrObj, res,ownId) {
         if (err) {
           res.json({ success: true, msg: err });
         }
-        res.status(200).json({ success: true, randomStr });
+        res.status(200).json({ success: true, shortUrl:randomStr });
       });
-    } else if(!ownId) {
+    } else if(!givenUrl) {
       // Generated random string already exist in the DB
       // Try once again
       createAndSaveShortUrl(shortUlrObj, res);
@@ -84,6 +81,8 @@ function createAndSaveShortUrl(shortUlrObj, res,ownId) {
     }
   });
 }
+
+
 function generateRandomString() {
   var length = 6,
     charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",

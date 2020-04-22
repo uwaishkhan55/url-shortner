@@ -16,5 +16,14 @@ const shortUrlSchema = new mongoose.Schema({
     default: 0
   }
 })
-
-module.exports = mongoose.model('ShortUrl', shortUrlSchema)
+const connnectDB=async ()=>{
+  const uri = "mongodb+srv://Uwaish55:Uwaish55@cluster0-k5soh.mongodb.net/test?retryWrites=true&w=majority";
+mongoose.connect(uri, { useUnifiedTopology: true,useNewUrlParser: true, useCreateIndex: true }
+);
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log("MongoDB database connection established successfully");
+})
+}
+const ShortUrls=mongoose.model('ShortUrl', shortUrlSchema);
+module.exports = {ShortUrls,connnectDB}
