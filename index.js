@@ -1,7 +1,5 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const ShortUrl = require('./models/shortUrl')
-const md5=require('md5');
 const app = express()
 
 const uri = "mongodb+srv://Uwaish55:Uwaish55@cluster0-k5soh.mongodb.net/test?retryWrites=true&w=majority";
