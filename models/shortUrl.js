@@ -18,6 +18,7 @@ const shortUrlSchema = new mongoose.Schema({
   
 } ,{
   timestamps: true,
+  versionKey:false
 })
 
 const connnectDB=async ()=>{
