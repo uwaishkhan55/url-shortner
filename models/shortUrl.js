@@ -15,7 +15,11 @@ const shortUrlSchema = new mongoose.Schema({
     required: true,
     default: 0
   }
+  
+} ,{
+  timestamps: true,
 })
+
 const connnectDB=async ()=>{
   const uri = "mongodb+srv://Uwaish55:Uwaish55@cluster0-k5soh.mongodb.net/test?retryWrites=true&w=majority";
 mongoose.connect(uri, { useUnifiedTopology: true,useNewUrlParser: true, useCreateIndex: true }
