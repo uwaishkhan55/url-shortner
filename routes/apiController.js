@@ -15,7 +15,7 @@ router.post("/short", (req, res) => {
   shortUrl = new ShortUrls({
     url: req.body.url,
   });
-  createAndSaveShortUrl(shortUrl, res,req.body.givenUrl);
+  createAndSaveShortUrl(shortUrl, res,req.body.customCode);
 });
 
 
@@ -57,12 +57,12 @@ router.get("/:id", (req, res) => {
 
 
 
-function createAndSaveShortUrl(shortUlrObj, res,givenUrl) {
+function createAndSaveShortUrl(shortUlrObj, res,customCode) {
   // Generate a random string to replace the url
   
   var randomStr;
-  if(givenUrl==undefined) randomStr=generateRandomString();
-  else randomStr=givenUrl;
+  if(customCode==undefined) randomStr=generateRandomString();
+  else randomStr=customCode;
   // Check if the random string already exist in DB
   ShortUrls.findOne({ _id: randomStr }, (err, url) => {
     if (err) {
@@ -77,7 +77,7 @@ function createAndSaveShortUrl(shortUlrObj, res,givenUrl) {
         }
         res.status(200).json({ success: true, shortUrl:randomStr });
       });
-    } else if(!givenUrl) {
+    } else if(!customCode) {
       // Generated random string already exist in the DB
       // Try once again
       createAndSaveShortUrl(shortUlrObj, res);
