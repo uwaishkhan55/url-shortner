@@ -15,7 +15,7 @@ router.post("/short", (req, res) => {
   shortUrl = new ShortUrls({
     url: req.body.url,
   });
-  createAndSaveShortUrl(shortUrl, res,req.body.customCode);
+  createAndSaveShortUrl(shortUrl, res,req.body.customCode );
 });
 
 
