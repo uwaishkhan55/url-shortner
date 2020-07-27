@@ -22,7 +22,7 @@ const shortUrlSchema = new mongoose.Schema({
 })
 
 const connnectDB=async ()=>{
-  const uri = "mongodb+srv://Uwaish55:Uwaish55@cluster0-k5soh.mongodb.net/test?retryWrites=true&w=majority";
+  const uri = PLEASE_ENTER_YOUR_URI
 mongoose.connect(uri, { useUnifiedTopology: true,useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
